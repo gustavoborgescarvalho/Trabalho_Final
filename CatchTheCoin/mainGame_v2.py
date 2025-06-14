@@ -22,15 +22,15 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Navio Cata Moedas!!!")
 clock = pygame.time.Clock()
 FONT = pygame.font.SysFont(None, 36)
-MOEDA_TAMANHO = (20, 20)
+MOEDA_TAMANHO = (30, 60)
 
 # Carregar a imagem do fundo (altere o caminho para sua imagem real)
-background_img = pygame.image.load(r'Assets/Ocean_8/6.png').convert()
+background_img = pygame.image.load(r'Assets/Ocean_6/5.png').convert()
 
 # barco
-barco_sprite_img = pygame.image.load(r'Assets/PNG/boat01.png').convert_alpha()
+barco_sprite_img = pygame.image.load(r'Assets/PNG/foguete001.png').convert_alpha()
 # Opcionalmente, ajuste o tamanho do sprite
-barco_sprite_img = pygame.transform.smoothscale(barco_sprite_img, (80, 40))
+barco_sprite_img = pygame.transform.smoothscale(barco_sprite_img, (130, 50))
 
 #mar
 sea_sprite = pygame.image.load(r'Assets/PNG/mar001.png').convert()
@@ -42,19 +42,19 @@ sea_rect = sea_sprite.get_rect(topleft=(0, HEIGHT - sea_sprite.get_height()))
 #
 def configurar_dificuldade(nivel):
     if nivel == 1:
-        qtd_moedas = 15
+        qtd_moedas = 5
         v_min = 2
         v_max = 3
     elif nivel == 2:
-        qtd_moedas = 25
+        qtd_moedas = 10
         v_min = 3
         v_max = 4
     elif nivel == 3:
-        qtd_moedas = 35
+        qtd_moedas = 15
         v_min = 4
         v_max = 6
     else:
-        qtd_moedas = 15
+        qtd_moedas = 5
         v_min = 2
         v_max = 3
     return qtd_moedas, v_min, v_max
@@ -69,10 +69,10 @@ def load_animation_frames(prefix, total_frames=10, tamanho=MOEDA_TAMANHO):
     return frames
 
 # Carregar sprites das moedas (alterar caminhos conforme seus arquivos)
-ouro_frames   = load_animation_frames(r"Assets\PNG\Gold\Gold")
-prata_frames  = load_animation_frames(r"Assets\PNG\Silver\Silver")
-bronze_frames = load_animation_frames(r"Assets\PNG\Bronze\Bronze")
-VALOR_MOEDAS  = {'ouro': 10, 'prata': 5, 'bronze': 1}
+ouro_frames   = load_animation_frames(r"Assets\PNG\Verde\Verde")
+prata_frames  = load_animation_frames(r"Assets\PNG\Amarelo\Amarelo")
+bronze_frames = load_animation_frames(r"Assets\PNG\Roxo\Roxo")
+VALOR_MOEDAS  = {'ouro': 5, 'prata': 5, 'bronze': 5}
 
 # Classe das moedas animadas
 class Moeda(pygame.sprite.Sprite):
@@ -123,6 +123,10 @@ class Barco(pygame.sprite.Sprite):
             self.rect.left = 0
         if self.rect.right > WIDTH:
             self.rect.right = WIDTH
+        if keys_pressed[pygame.K_UP]:
+            self.rect.y -= self.speed
+        if keys_pressed[pygame.K_DOWN]:
+            self.rect.y += self.speed
 
     def voltar_ao_porto(self):
         self.rect.midbottom = (WIDTH // 2, HEIGHT - 100)
